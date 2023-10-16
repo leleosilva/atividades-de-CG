@@ -1,28 +1,17 @@
-use std::io::{stderr, Write};
-  
-fn main() {
-    const IMAGE_WIDTH: u64 = 256;
-    const IMAGE_HEIGHT: u64 = 256;
+use std::{io::{stderr, Write}, path::Path};
+use image::RgbImage;
 
-    println!("P3");
-    println!("{} {}", IMAGE_WIDTH, IMAGE_HEIGHT);
-    println!("255");
+pub struct ImgManager {
 
-    for j in (0..IMAGE_HEIGHT).rev() {
-        eprintln!("\rScanlines remaining: {:3}", IMAGE_HEIGHT - j - 1);
-        stderr().flush().unwrap();
+}
 
-        for i in 0..IMAGE_WIDTH {
-            let r = (i as f64) / ((IMAGE_WIDTH - 1) as f64);
-            let g = (j as f64) / ((IMAGE_HEIGHT - 1) as f64);
-            let b = 0.25;
-
-            let ir = (255.999 * r) as u64;
-            let ig = (255.999 * g) as u64;
-            let ib = (255.999 * b) as u64;
-
-            println!("{} {} {}", ir, ig, ib);
-        }
+impl ImgManager {
+    pub fn save_png(filename: &str, (width, height): (u32, u32)) {
+        let mut image: RgbImage = RgbImage::new(width, height);
+        image.save(filename).unwrap();
     }
-    eprintln!("Done.");
+}
+
+fn main() {
+    ImgManager::save_png("output.png", (400, 400));
 }
