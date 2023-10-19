@@ -24,10 +24,6 @@ impl ImgManager {
     }
 }
 
-fn main() {
-}
-
-
 #[cfg(test)]
 mod tests {
     use super::*;
